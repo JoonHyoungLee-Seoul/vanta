@@ -1,0 +1,82 @@
+.payment-page {
+  padding: 60px 24px 40px;
+  position: relative;
+}
+
+.payment-page .back-button {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  font-size: 20px;
+}
+
+.payment-content {
+  padding-top: 80px;
+}
+
+.payment-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 32px;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.payment-details {
+  margin-bottom: 40px;
+  text-align: left;
+}
+
+.bank-name {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0 0 8px 0;
+}
+
+.account-number {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0 0 20px 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.account-number:hover {
+  opacity: 0.8;
+}
+
+.payment-amount {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.payment-page .button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.complete-btn {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 50px;
+  padding: 16px 48px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.complete-btn:hover {
+  background: #e0e0e0;
+}
+
+.complete-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

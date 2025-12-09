@@ -1,0 +1,211 @@
+{
+  "main": {
+    "id": "baf709bad58d41f0",
+    "type": "split",
+    "children": [
+      {
+        "id": "bb04f177e42f7d8c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "a9075a68836a36ba",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "README"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c671d67f2b9cd5e1",
+    "type": "split",
+    "children": [
+      {
+        "id": "536fb00472a5e2ef",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c1991ee129313461",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "937577460fc3ba24",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "35da2a9b6a3ff98f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "북마크"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "4740283bc5b1a467",
+    "type": "split",
+    "children": [
+      {
+        "id": "e2152c9239deb194",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "1cd8849486a63930",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "README.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "README 의 백링크"
+            }
+          },
+          {
+            "id": "e728ca1887cc8ccd",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "README.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "README 의 나가는 링크"
+            }
+          },
+          {
+            "id": "f550873115335dd0",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "9b9ab277792ed417",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "모든 속성"
+            }
+          },
+          {
+            "id": "3a8d4cd1128a101c",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "README.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "README 의 개요"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false,
+      "bases:새 베이스 생성하기": false
+    }
+  },
+  "active": "a9075a68836a36ba",
+  "lastOpenFiles": [
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info/top_level.txt",
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info/WHEEL",
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info/REQUESTED",
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info/RECORD",
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info/METADATA",
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info/LICENSE",
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info/INSTALLER",
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info/AUTHORS.rst",
+    "venv/lib/python3.12/site-packages/PyJWT-2.10.1.dist-info",
+    "venv/lib/python3.12/site-packages/jwt/__pycache__/jwks_client.cpython-312.pyc",
+    "venv/lib/python3.12/site-packages/jwt/__pycache__/warnings.cpython-312.pyc",
+    "ADMIN_SETUP.md",
+    "DEPLOYMENT.md",
+    "SECURITY.md",
+    "venv/lib/python3.12/site-packages/httpx-0.28.1.dist-info/licenses/LICENSE.md",
+    "venv/lib/python3.12/site-packages/starlette-0.45.3.dist-info/licenses/LICENSE.md",
+    "venv/lib/python3.12/site-packages/httpcore-1.0.9.dist-info/licenses/LICENSE.md",
+    "venv/lib/python3.12/site-packages/uvicorn-0.34.2.dist-info/licenses/LICENSE.md",
+    "venv/lib/python3.12/site-packages/idna-3.11.dist-info/licenses/LICENSE.md",
+    "venv/lib/python3.12/site-packages/~ttpcore-1.0.9.dist-info/licenses/LICENSE.md",
+    "README.md",
+    "CLAUDE.md"
+  ]
+}

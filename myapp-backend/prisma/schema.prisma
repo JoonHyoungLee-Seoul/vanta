@@ -1,0 +1,48 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-py"
+}
+
+model Invitation {
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  is_active Boolean  @default(true)
+}
+
+model RegisterSession {
+  sessionId     String   @id
+  invitationId  Int
+  name          String?
+  password      String?
+  birthday      String?
+  phone         String?
+}
+
+model User {
+  id            Int          @id @default(autoincrement())
+  userId        String       @unique
+  name          String
+  password      String
+  birthday      String
+  phone         String
+  invitationId  Int
+  enrollments   Enrollment[]
+}
+
+model Enrollment {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  partyId    Int
+  enrolled   Boolean  @default(true)
+  status     String   @default("pending")
+  couponUsed Boolean  @default(false)
+  createdAt  DateTime @default(now())
+
+  user       User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, partyId])
+}

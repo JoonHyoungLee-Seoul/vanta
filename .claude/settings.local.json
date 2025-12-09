@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(source venv/bin/activate)",
+      "Bash(prisma generate:*)",
+      "Bash(timeout 10 uvicorn:*)",
+      "Bash(python:*)",
+      "Bash(curl:*)",
+      "Bash(python3:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

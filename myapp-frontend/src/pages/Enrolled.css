@@ -1,0 +1,36 @@
+.enrolled-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.enrolled-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.enrolled-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.enrolled-subtitle {
+  font-size: 16px;
+  color: #FF9500;
+  margin: 0;
+  font-weight: 500;
+}
+
+.enrolled-location {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}

@@ -1,0 +1,71 @@
+<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a0505"/>
+      <stop offset="30%" style="stop-color:#2d1810"/>
+      <stop offset="70%" style="stop-color:#a08060"/>
+      <stop offset="100%" style="stop-color:#605040"/>
+    </linearGradient>
+    <linearGradient id="handGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#f5ede0"/>
+      <stop offset="50%" style="stop-color:#e0d4c0"/>
+      <stop offset="100%" style="stop-color:#c8b8a0"/>
+    </linearGradient>
+    <linearGradient id="clothGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b1515"/>
+      <stop offset="100%" style="stop-color:#5a0a0a"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="300" height="300" fill="url(#bgGradient)"/>
+  
+  <!-- Halloween Text -->
+  <text x="150" y="50" 
+        font-family="Times New Roman, Georgia, serif" 
+        font-size="38" 
+        font-weight="900"
+        font-style="italic"
+        fill="#cc2020" 
+        text-anchor="middle"
+        style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5)">
+    Halloween
+  </text>
+  
+  <!-- Red cloth/fabric -->
+  <ellipse cx="150" cy="220" rx="120" ry="30" fill="url(#clothGradient)"/>
+  <rect x="30" y="190" width="240" height="40" fill="url(#clothGradient)"/>
+  
+  <!-- Table/surface edge -->
+  <rect x="0" y="250" width="300" height="50" fill="#3a3030"/>
+  <rect x="0" y="248" width="300" height="6" fill="#504540"/>
+  
+  <!-- Spooky Hand -->
+  <g transform="translate(90, 80)">
+    <!-- Palm and back of hand -->
+    <path d="M60,200 
+             L55,140 
+             Q50,120 55,100 
+             L50,60 Q48,45 55,40 Q65,35 70,45 L70,70
+             L72,35 Q70,20 80,15 Q92,12 95,25 L90,70
+             L95,25 Q95,8 108,5 Q120,5 122,22 L115,75
+             L125,40 Q128,25 140,30 Q150,38 145,55 L130,100
+             Q135,120 130,140
+             L125,200 Z" 
+          fill="url(#handGradient)"
+          stroke="#b8a888"
+          stroke-width="1"/>
+    
+    <!-- Fingernails -->
+    <ellipse cx="58" cy="38" rx="5" ry="10" fill="#1a1a1a" stroke="#a09080" stroke-width="0.5"/>
+    <ellipse cx="82" cy="15" rx="5" ry="12" fill="#1a1a1a" stroke="#a09080" stroke-width="0.5"/>
+    <ellipse cx="110" cy="8" rx="5" ry="12" fill="#1a1a1a" stroke="#a09080" stroke-width="0.5"/>
+    <ellipse cx="138" cy="28" rx="4" ry="10" fill="#1a1a1a" stroke="#a09080" stroke-width="0.5"/>
+    
+    <!-- Finger creases/details -->
+    <path d="M55,90 Q65,88 70,90" stroke="#a09080" stroke-width="0.5" fill="none"/>
+    <path d="M75,85 Q85,83 90,85" stroke="#a09080" stroke-width="0.5" fill="none"/>
+    <path d="M95,80 Q105,78 115,82" stroke="#a09080" stroke-width="0.5" fill="none"/>
+  </g>
+</svg>
+
