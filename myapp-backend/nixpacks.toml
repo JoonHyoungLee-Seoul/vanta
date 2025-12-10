@@ -1,17 +1,5 @@
-[phases.setup]
-nixPkgs = ["python39", "python39Packages.pip", "nodejs-18_x"]
-
-[phases.install]
-cmds = [
-  "python3 -m pip install --upgrade pip",
-  "python3 -m pip install -r requirements.txt",
-  "npm install"
-]
-
 [phases.build]
-cmds = [
-  "npx prisma generate"
-]
+cmds = ["npx prisma generate"]
 
 [start]
 cmd = "gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT"
