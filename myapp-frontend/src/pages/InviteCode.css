@@ -1,0 +1,83 @@
+.invite-page {
+  padding: 60px 24px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.invite-page .form-content {
+  padding-top: 40px;
+}
+
+.invite-page .page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.invite-page .input-group {
+  margin-bottom: 20px;
+}
+
+.invite-page .input-field {
+  border-color: var(--border-color);
+}
+
+.invite-page .input-field:focus,
+.invite-page .input-field.active {
+  border-color: var(--text-primary);
+  box-shadow: none;
+}
+
+.invite-page .button-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.invite-page .btn-primary {
+  padding: 14px 28px;
+  font-size: 15px;
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.invite-page .btn-primary:hover {
+  background: #e0e0e0;
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+}
+
+.invite-page .btn-primary:disabled {
+  background: var(--border-color);
+  color: var(--text-muted);
+}
+
+.invite-page .login-prompt {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.invite-page .login-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.invite-page .login-arrow-btn {
+  padding: 14px 28px;
+  font-size: 18px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.invite-page .login-arrow-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}

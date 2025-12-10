@@ -1,0 +1,220 @@
+.profile-page {
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.profile-header {
+  padding: 40px 24px 20px;
+}
+
+.profile-content {
+  flex: 1;
+  padding: 20px 24px 100px;
+}
+
+.profile-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 24px 0;
+}
+
+.profile-info-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 32px 24px;
+  margin-bottom: 24px;
+}
+
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32px;
+}
+
+.profile-avatar svg {
+  color: #666;
+}
+
+.profile-details {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #333;
+}
+
+.profile-detail-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.detail-label {
+  font-size: 13px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.detail-value {
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Coupon Summary Card */
+.coupon-summary-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+.coupon-stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 16px;
+}
+
+.coupon-stat {
+  flex: 1;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.stat-value.available {
+  color: #4ade80;
+}
+
+.stat-value.used {
+  color: #f87171;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Enrolled Parties Card */
+.enrolled-parties-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.party-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.party-item {
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.party-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.party-item-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.party-item-date {
+  font-size: 13px;
+  color: #999;
+}
+
+.party-item-status {
+  flex-shrink: 0;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.status-badge.available {
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+}
+
+.status-badge.used {
+  background: rgba(102, 102, 102, 0.2);
+  color: #666;
+}
+
+.status-badge.pending {
+  background: rgba(255, 149, 0, 0.2);
+  color: #FF9500;
+}
+
+.status-badge.rejected {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.empty-message {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  padding: 32px 0;
+}
+
+/* Logout Button */
+.logout-btn {
+  width: 100%;
+  padding: 16px;
+  background: #2a2a2a;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.logout-btn:hover {
+  background: #333;
+  border-color: #666;
+}

@@ -1,0 +1,210 @@
+.coupon-page {
+  background: #000;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.coupon-header {
+  padding: 40px 24px 20px;
+}
+
+.vanta-logo {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.coupon-content {
+  flex: 1;
+  padding: 20px 24px 100px;
+}
+
+.coupon-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 20px 0;
+}
+
+.coupon-card {
+  background: #2a2a2a;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coupon-card-content {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex: 1;
+}
+
+.coupon-image-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.coupon-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.coupon-text-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 4px;
+  text-align: center;
+}
+
+.halloween-text {
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ff4500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+.coupon-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.coupon-offer {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.coupon-party {
+  font-size: 13px;
+  color: #999;
+  margin: 0;
+}
+
+.coupon-action {
+  flex-shrink: 0;
+}
+
+.coupon-use-btn {
+  background: transparent;
+  color: #fff;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: opacity 0.2s;
+}
+
+.coupon-use-btn:hover {
+  opacity: 0.8;
+}
+
+.coupon-used-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
+  padding: 8px 16px;
+}
+
+/* Used Modal */
+.coupon-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 24px;
+}
+
+.coupon-modal-content {
+  text-align: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.coupon-modal-image-container {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.halloween-modal-text {
+  display: block;
+  font-family: 'Courier New', monospace;
+  font-size: 48px;
+  font-weight: 700;
+  color: #ff4500;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  margin-bottom: 20px;
+}
+
+.coupon-modal-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.coupon-modal-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.coupon-modal-subtitle {
+  font-size: 16px;
+  color: #ccc;
+  margin: 0;
+}
+
+/* Bottom navigation is now handled by BottomNav component */
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: #666;
+  cursor: pointer;
+  padding: 8px 16px;
+  transition: color 0.2s;
+}
+
+.nav-btn:hover {
+  color: #999;
+}
+
+.nav-btn.active {
+  color: #fff;
+}
+
+.nav-btn svg {
+  display: block;
+}
+
+/* Empty coupon state */
+.empty-coupon-message {
+  text-align: center;
+  padding: 60px 24px;
+  color: #999;
+}
+
+.empty-coupon-message p {
+  font-size: 16px;
+  margin: 0;
+}

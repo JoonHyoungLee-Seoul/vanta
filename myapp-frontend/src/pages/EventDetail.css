@@ -1,0 +1,147 @@
+.event-detail-page {
+  padding: 50px 20px 40px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.event-header {
+  margin-bottom: 24px;
+}
+
+.event-content {
+  flex: 1;
+  padding-bottom: 100px;
+}
+
+.event-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.halloween-banner {
+  width: 100%;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.halloween-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.event-info {
+  margin-bottom: 20px;
+}
+
+.event-date {
+  margin-bottom: 12px;
+}
+
+.date-day {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.date-time {
+  font-size: 15px;
+  color: var(--text-secondary);
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.meta-label {
+  color: var(--text-secondary);
+}
+
+.host-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary);
+}
+
+.host-avatar-small {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--border-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.location-icon,
+.spots-icon {
+  font-size: 14px;
+}
+
+.location-text {
+  color: var(--text-secondary);
+}
+
+.location-text strong {
+  color: var(--text-primary);
+}
+
+.location-revealed {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.spots-text {
+  color: var(--text-secondary);
+}
+
+.event-description {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
+}
+
+.event-description p {
+  margin: 0;
+}
+
+.event-footer {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 20px;
+}
+
+.enroll-button {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+  padding: 12px 24px;
+}
+
+.enroll-button:hover {
+  opacity: 0.8;
+}

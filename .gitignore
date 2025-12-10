@@ -1,0 +1,76 @@
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+.cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Database
+*.db
+*.sqlite
+
+# Prisma
+myapp-backend/prisma/migrations/migration_lock.toml
+
+# Build
+build/
+dist/
+*.tsbuildinfo
+
+# Temporary files
+*.tmp
+.temp/
+
+# Android
+myapp-frontend/android/app/build/
+myapp-frontend/android/.gradle/
+myapp-frontend/android/local.properties
+myapp-frontend/android/key.properties
+*.jks
+*.keystore
+
+# iOS
+myapp-frontend/ios/App/Pods/
+myapp-frontend/ios/App/build/
+myapp-frontend/ios/App/*.xcworkspace/xcuserdata/
+myapp-frontend/ios/App/*.xcodeproj/xcuserdata/
+myapp-frontend/ios/App/*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# Capacitor
+myapp-frontend/.capacitor/
