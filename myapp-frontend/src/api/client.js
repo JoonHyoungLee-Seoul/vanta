@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://vanta-production-9f79.up.railway.app';
 const TOKEN_KEY = 'auth_token';
 
 class ApiClient {
