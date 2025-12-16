@@ -20,6 +20,7 @@ model RegisterSession {
   password      String?
   birthday      String?
   phone         String?
+  userId        String?
 }
 
 model User {
