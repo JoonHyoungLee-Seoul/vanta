@@ -1,6 +1,4 @@
-[providers]
-python = { enable = true }
-node = { enable = false }
+providers = ["python"]
 
 [phases.setup]
 nixPkgs = ["python311", "gcc", "stdenv.cc.cc.lib"]
