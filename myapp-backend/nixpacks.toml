@@ -1,10 +1,8 @@
 [phases.setup]
-nixPkgs = ["python311", "python311Packages.pip", "python311Packages.virtualenv", "nodejs-18_x"]
+nixPkgs = ["python311", "gcc", "stdenv.cc.cc.lib"]
 
 [phases.install]
-cmds = [
-  "python3 -m venv /opt/venv && . /opt/venv/bin/activate && pip install -r requirements.txt && npm install && npx prisma generate"
-]
+cmds = ["pip install -r requirements.txt"]
 
 [start]
-cmd = "/opt/venv/bin/gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT"
+cmd = "gunicorn main:app --workers 4 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8080 --timeout 120"
