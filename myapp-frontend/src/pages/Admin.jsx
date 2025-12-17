@@ -129,9 +129,6 @@ function Admin() {
         </button>
         <h1 className="admin-title">Enrollment Approvals</h1>
         <div className="admin-actions">
-          <button className="party-manage-btn" onClick={() => navigate('/parties')}>
-            Party 관리
-          </button>
           <button className="refresh-btn" onClick={loadPendingEnrollments}>
             ↻ Refresh
           </button>
