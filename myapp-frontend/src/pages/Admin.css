@@ -23,6 +23,12 @@
   text-align: center;
 }
 
+.admin-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
 .back-btn,
 .refresh-btn {
   background: none;
@@ -39,6 +45,24 @@
 .refresh-btn:hover {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text-primary);
+}
+
+.party-manage-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.party-manage-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .admin-content {

@@ -205,6 +205,13 @@ function Profile() {
           )}
         </div>
 
+        {/* 관리자 전용 버튼 */}
+        {profileData.user && profileData.user.id === 1 && (
+          <button className="admin-btn" onClick={() => navigate('/admin')}>
+            Admin Dashboard
+          </button>
+        )}
+
         <button className="logout-btn" onClick={() => {
           navigate('/login');
         }}>
