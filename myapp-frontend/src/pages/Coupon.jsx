@@ -113,7 +113,7 @@ function Coupon() {
           <div className="coupon-modal-content">
             <div className="coupon-modal-image-container">
               <img
-                src="/party-image.png"
+                src="/images/party-main.png"
                 alt="Party"
                 className="coupon-modal-image"
               />
