@@ -11,7 +11,7 @@ const parties = [
     id: 1,
     name: "Soy's 할로윈 파티",
     host: 'Soy Park',
-    image: '/images/party-main.jpg',
+    image: '/images/party-main.png',
   },
 ];
 
