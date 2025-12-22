@@ -421,6 +421,41 @@ async def check_enrollment(user_id: int, party_id: int, db: AsyncSession = Depen
 
 
 # ====================================================================================
+# 파티 정보 조회 (공개 API)
+# ====================================================================================
+
+
+@app.get("/party/{party_id}/info")
+async def get_party_info(party_id: int, db: AsyncSession = Depends(get_db)):
+    """파티 정보와 남은 자리 수를 조회"""
+    # 승인된 enrollment 수 카운트
+    result = await db.execute(
+        select(Enrollment).where(
+            Enrollment.partyId == party_id,
+            Enrollment.status == "approved"
+        )
+    )
+    approved_enrollments = result.scalars().all()
+    enrolled_count = len(approved_enrollments)
+
+    # 파티별 총 정원 (하드코딩 - 추후 Party 모델 추가 시 DB에서 가져오기)
+    party_capacities = {
+        1: 50,  # After-Christmas Party
+    }
+
+    total_spots = party_capacities.get(party_id, 50)
+    spots_left = max(0, total_spots - enrolled_count)
+
+    return {
+        "ok": True,
+        "partyId": party_id,
+        "totalSpots": total_spots,
+        "enrolledCount": enrolled_count,
+        "spotsLeft": spots_left
+    }
+
+
+# ====================================================================================
 # Enrollment 목록 조회 (관리자용)
 # ====================================================================================
 
