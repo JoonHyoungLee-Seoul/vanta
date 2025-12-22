@@ -2,6 +2,13 @@
   padding: 50px 20px 100px;
 }
 
+/* Responsive padding for larger screens */
+@media (min-width: 768px) {
+  .party-list-page {
+    padding: 60px 40px 120px;
+  }
+}
+
 .party-header {
   margin-bottom: 40px;
 }

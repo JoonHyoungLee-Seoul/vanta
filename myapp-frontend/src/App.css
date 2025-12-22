@@ -23,44 +23,56 @@
 
 html, body {
   height: 100%;
-  background: #1a1a1a;
+  background: var(--bg-primary);
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .app-container {
   min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+  background: var(--bg-primary);
 }
 
 .phone-frame {
   width: 100%;
-  max-width: 393px;
-  min-height: 852px;
-  height: 852px;
+  min-height: 100vh;
   background: var(--bg-primary);
-  border-radius: 40px;
   overflow: hidden;
   position: relative;
-  box-shadow: 
-    0 0 0 12px #1a1a1a,
-    0 0 0 14px #333,
-    0 25px 50px -12px rgba(0, 0, 0, 0.8);
+  max-width: 100%;
+}
+
+/* Tablet and up: constrain width for better readability */
+@media (min-width: 768px) {
+  .phone-frame {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+/* Desktop: slightly wider but still comfortable */
+@media (min-width: 1024px) {
+  .phone-frame {
+    max-width: 720px;
+  }
 }
 
 /* Page base styles */
 .page {
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   background: var(--bg-primary);
   padding: 60px 24px 40px;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow-y: auto;
+}
+
+/* Responsive padding for larger screens */
+@media (min-width: 768px) {
+  .page {
+    padding: 80px 40px 60px;
+  }
 }
 
 .page-with-header {
