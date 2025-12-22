@@ -13,7 +13,7 @@ function Admin() {
   const [processingId, setProcessingId] = useState(null);
 
   const partyNames = {
-    1: "Say's Halloween Party"
+    1: "After-Christmas Party"
   };
 
   useEffect(() => {

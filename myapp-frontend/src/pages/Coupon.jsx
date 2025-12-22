@@ -14,7 +14,7 @@ function Coupon() {
   const navigate = useNavigate();
   const { registrationData } = useEnrollment();
 
-  // For now, hardcoding partyId as 1 (Say's Halloween Party)
+  // For now, hardcoding partyId as 1 (After-Christmas Party)
   const partyId = 1;
 
   useEffect(() => {
@@ -91,7 +91,7 @@ function Coupon() {
               </div>
               <div className="coupon-info">
                 <p className="coupon-offer">1 Free drink</p>
-                <p className="coupon-party">Say's Halloween Party</p>
+                <p className="coupon-party">After-Christmas Party</p>
               </div>
             </div>
             <div className="coupon-action">

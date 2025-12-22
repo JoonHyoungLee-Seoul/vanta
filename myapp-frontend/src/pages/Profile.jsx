@@ -8,7 +8,7 @@ import './Profile.css';
 
 // 파티 데이터 매핑 (실제로는 백엔드에서 가져와야 하지만, 현재는 하드코딩)
 const partyNames = {
-  1: "Say's Halloween Party"
+  1: "After-Christmas Party"
 };
 
 function Profile() {
