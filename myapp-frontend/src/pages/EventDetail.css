@@ -22,7 +22,7 @@
 
 .halloween-banner {
   width: 100%;
-  height: 200px;
+  height: 300px;
   margin-bottom: 24px;
   border-radius: 12px;
   overflow: hidden;
@@ -30,6 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 40px;
 }
 
 .halloween-image {
@@ -38,6 +39,8 @@
   object-fit: contain;
   object-position: center;
   display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .event-info {
