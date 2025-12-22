@@ -70,9 +70,9 @@ function EventDetail() {
         <h2 className="event-title fade-in delay-1">{event.title}</h2>
         
         <div className="halloween-banner fade-in delay-2">
-          <img 
-            src="/images/halloween-party.svg" 
-            alt="Halloween Party" 
+          <img
+            src="/images/party-main.jpg"
+            alt="Party"
             className="halloween-image"
           />
         </div>
