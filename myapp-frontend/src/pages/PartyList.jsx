@@ -9,8 +9,8 @@ import './PartyList.css';
 const parties = [
   {
     id: 1,
-    name: "Soy's 할로윈 파티",
-    host: 'Soy Park',
+    name: "After-Christmas Party",
+    host: 'Woojin Park, Joonhyoung Lee',
     image: '/images/party-main.png',
   },
 ];
