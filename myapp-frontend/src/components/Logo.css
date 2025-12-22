@@ -1,7 +1,6 @@
 .vanta-logo {
   display: flex;
   align-items: center;
-  color: white;
   cursor: pointer;
   transition: opacity 0.2s;
 }
@@ -10,27 +9,28 @@
   opacity: 0.8;
 }
 
-.vanta-logo svg {
+.vanta-logo-img {
   width: 100%;
   height: 100%;
+  object-fit: contain;
 }
 
 .vanta-logo-small {
   width: 80px;
-  height: 14px;
+  height: auto;
 }
 
 .vanta-logo-medium {
   width: 120px;
-  height: 20px;
+  height: auto;
 }
 
 .vanta-logo-large {
   width: 180px;
-  height: 30px;
+  height: auto;
 }
 
 .vanta-logo-xlarge {
   width: 220px;
-  height: 36px;
+  height: auto;
 }

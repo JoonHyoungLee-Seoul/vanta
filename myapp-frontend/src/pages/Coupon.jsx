@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEnrollment } from '../context/EnrollmentContext';
 import { apiClient } from '../api/client';
 import BottomNav from '../components/BottomNav';
+import Logo from '../components/Logo';
 import './Coupon.css';
 
 function Coupon() {
@@ -68,7 +69,7 @@ function Coupon() {
   return (
     <div className="page coupon-page">
       <div className="coupon-header">
-        <h1 className="vanta-logo">VANTA</h1>
+        <Logo size="medium" />
       </div>
 
       <div className="coupon-content">

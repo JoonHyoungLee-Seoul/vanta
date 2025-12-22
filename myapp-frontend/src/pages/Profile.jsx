@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEnrollment } from '../context/EnrollmentContext';
 import { apiClient } from '../api/client';
 import BottomNav from '../components/BottomNav';
+import Logo from '../components/Logo';
 import './Profile.css';
 
 // 파티 데이터 매핑 (실제로는 백엔드에서 가져와야 하지만, 현재는 하드코딩)
@@ -75,7 +76,7 @@ function Profile() {
     return (
       <div className="page profile-page">
         <div className="profile-header">
-          <h1 className="vanta-logo">VANTA</h1>
+          <Logo size="medium" />
         </div>
         <div className="profile-content">
           <p>Loading...</p>
@@ -89,7 +90,7 @@ function Profile() {
     return (
       <div className="page profile-page">
         <div className="profile-header">
-          <h1 className="vanta-logo">VANTA</h1>
+          <Logo size="medium" />
         </div>
         <div className="profile-content">
           <p>프로필 정보를 불러올 수 없습니다.</p>
@@ -102,7 +103,7 @@ function Profile() {
   return (
     <div className="page profile-page">
       <div className="profile-header">
-        <h1 className="vanta-logo">VANTA</h1>
+        <Logo size="medium" />
       </div>
 
       <div className="profile-content">
