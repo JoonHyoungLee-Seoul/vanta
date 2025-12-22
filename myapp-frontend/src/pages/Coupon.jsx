@@ -84,13 +84,10 @@ function Coupon() {
             <div className="coupon-card-content">
               <div className="coupon-image-container">
                 <img
-                  src="/halloween-hand.jpg"
-                  alt="Halloween"
+                  src="/party-image.png"
+                  alt="Party"
                   className="coupon-image"
                 />
-                <div className="coupon-text-overlay">
-                  <span className="halloween-text">Halloween</span>
-                </div>
               </div>
               <div className="coupon-info">
                 <p className="coupon-offer">1 Free drink</p>
@@ -115,10 +112,9 @@ function Coupon() {
         <div className="coupon-modal" onClick={closeModal}>
           <div className="coupon-modal-content">
             <div className="coupon-modal-image-container">
-              <span className="halloween-modal-text">Halloween</span>
               <img
-                src="/halloween-hand.jpg"
-                alt="Halloween"
+                src="/party-image.png"
+                alt="Party"
                 className="coupon-modal-image"
               />
             </div>

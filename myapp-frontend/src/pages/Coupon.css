@@ -47,25 +47,8 @@
 .coupon-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 4px;
-}
-
-.coupon-text-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  padding: 4px;
-  text-align: center;
-}
-
-.halloween-text {
-  font-family: 'Courier New', monospace;
-  font-size: 14px;
-  font-weight: 700;
-  color: #ff4500;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .coupon-info {
@@ -138,20 +121,11 @@
   margin-bottom: 40px;
 }
 
-.halloween-modal-text {
-  display: block;
-  font-family: 'Courier New', monospace;
-  font-size: 48px;
-  font-weight: 700;
-  color: #ff4500;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-  margin-bottom: 20px;
-}
-
 .coupon-modal-image {
   width: 100%;
   max-width: 300px;
   height: auto;
+  object-fit: contain;
   border-radius: 8px;
 }
 
