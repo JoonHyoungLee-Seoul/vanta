@@ -242,6 +242,21 @@ class ApiClient {
     return response.json();
   }
 
+  async getPartyInfo(partyId) {
+    const response = await fetch(`${API_BASE_URL}/party/${partyId}/info`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('파티 정보 조회 실패');
+    }
+
+    return response.json();
+  }
+
   async getCoupon(userId, partyId) {
     const response = await this.fetchWithErrorHandling(`${API_BASE_URL}/coupon/${userId}/${partyId}`, {
       method: 'GET',

@@ -13,8 +13,6 @@ const eventData = {
     date: 'Sat, DEC 27',
     time: '8:00pm - 2:00am',
     host: 'Woojin Park, Joonhyoung Lee',
-    spotsLeft: 12,
-    totalSpots: 50,
     location: '서울 강남구 압구정로48길 35 1층 (사파리 압구정)',
     description: '',
   },
@@ -27,22 +25,35 @@ function EventDetail() {
   const event = eventData[id] || eventData[1];
   const [enrolled, setEnrolled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [partyInfo, setPartyInfo] = useState({ spotsLeft: 0, totalSpots: 50 });
 
   useEffect(() => {
-    const fetchEnrollmentStatus = async () => {
+    const fetchData = async () => {
       const userId = registrationData.userId;
-      if (userId) {
-        try {
-          const response = await apiClient.checkEnrollment(userId, id);
-          setEnrolled(response.enrolled);
-        } catch (error) {
-          console.error('참가 상태 확인 실패:', error);
+
+      try {
+        // Fetch party info (spots remaining)
+        const partyInfoResponse = await apiClient.getPartyInfo(id);
+        if (partyInfoResponse.ok) {
+          setPartyInfo({
+            spotsLeft: partyInfoResponse.spotsLeft,
+            totalSpots: partyInfoResponse.totalSpots,
+          });
         }
+
+        // Fetch enrollment status
+        if (userId) {
+          const enrollmentResponse = await apiClient.checkEnrollment(userId, id);
+          setEnrolled(enrollmentResponse.enrolled);
+        }
+      } catch (error) {
+        console.error('데이터 조회 실패:', error);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
-    fetchEnrollmentStatus();
+    fetchData();
   }, [id, registrationData.userId]);
 
   const handleEnroll = () => {
@@ -94,7 +105,7 @@ function EventDetail() {
 
             <div className="meta-row">
               <span className="spots-icon">👥</span>
-              <span className="spots-text">{event.spotsLeft}/{event.totalSpots} spots left</span>
+              <span className="spots-text">{partyInfo.spotsLeft}/{partyInfo.totalSpots} spots left</span>
             </div>
           </div>
         </div>
