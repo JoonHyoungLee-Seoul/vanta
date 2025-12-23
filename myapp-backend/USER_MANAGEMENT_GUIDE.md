@@ -539,6 +539,386 @@ engine = create_async_engine(
 
 ---
 
+## 운영 중 유저 지원 시나리오
+
+실제 서비스 운영 시 유저들이 요청할 수 있는 상황들과 운영자 대처 방법
+
+### 시나리오 1: 비밀번호 분실/초기화 요청
+
+**상황:**
+> "비밀번호를 잊어버렸어요. 초기화해주세요."
+
+**해결 방법:**
+
+**방법 A: 임시 비밀번호 생성 후 안내**
+```python
+# Python으로 bcrypt 해시 생성
+import bcrypt
+
+new_password = "TempPass123!"
+hashed = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+print(hashed.decode('utf-8'))
+# 출력: $2b$12$... (이 값을 SQL에 사용)
+```
+
+```sql
+-- 유저 ID로 검색 (이름/전화번호로 먼저 찾기)
+SELECT id, "userId", name, phone FROM "User" WHERE name = '홍길동';
+
+-- 비밀번호 업데이트
+UPDATE "User"
+SET password = '$2b$12$새로생성한해시값'
+WHERE id = 123;
+```
+
+**방법 B: 유저에게 재가입 안내**
+- 기존 계정 삭제 후 새로 가입하도록 안내
+- 초대코드 재발급
+
+**⚠️ 주의:**
+- 비밀번호 변경 시 유저에게 안전하게 전달 (카톡, 문자)
+- 임시 비밀번호는 충분히 복잡하게 생성
+- 로그인 후 비밀번호 변경 권장
+
+---
+
+### 시나리오 2: 쿠폰을 실수로 사용함 (재발급 요청)
+
+**상황:**
+> "실수로 쿠폰 사용 버튼을 눌렀어요. 다시 사용할 수 있게 해주세요."
+
+**해결 방법:**
+
+```sql
+-- 1. 유저 확인
+SELECT * FROM "User" WHERE name = '홍길동' OR "userId" = 'user123';
+
+-- 2. Enrollment 확인
+SELECT * FROM "Enrollment"
+WHERE "userId" = 123 AND "partyId" = 1;
+
+-- 3. 쿠폰 사용 상태 초기화
+UPDATE "Enrollment"
+SET "couponUsed" = false
+WHERE "userId" = 123 AND "partyId" = 1;
+```
+
+**Prisma Studio 방법:**
+1. `npx prisma studio`
+2. Enrollment 테이블에서 해당 유저 검색
+3. `couponUsed` 필드를 `false`로 변경
+4. Save
+
+**⚠️ 주의:**
+- 쿠폰이 실제로 매장에서 사용되었는지 먼저 확인
+- 중복 사용 방지를 위해 기록 남기기
+
+---
+
+### 시나리오 3: 전화번호/이름 변경 요청
+
+**상황:**
+> "전화번호가 바뀌었어요. 010-1234-5678에서 010-9999-8888로 변경해주세요."
+
+**해결 방법:**
+
+```sql
+-- 유저 확인
+SELECT id, "userId", name, phone FROM "User" WHERE phone = '01012345678';
+
+-- 전화번호 변경
+UPDATE "User"
+SET phone = '01099998888'
+WHERE id = 123;
+
+-- 이름 변경
+UPDATE "User"
+SET name = '새이름'
+WHERE id = 123;
+```
+
+**Prisma Studio 방법:**
+1. User 테이블에서 해당 유저 찾기
+2. `phone` 또는 `name` 필드 수정
+3. Save
+
+---
+
+### 시나리오 4: 파티 참가 취소 요청
+
+**상황:**
+> "급한 일이 생겨서 파티에 못 가게 됐어요. 취소해주세요."
+
+**해결 방법:**
+
+**방법 A: Enrollment 삭제 (환불 시)**
+```sql
+-- Enrollment 삭제
+DELETE FROM "Enrollment"
+WHERE "userId" = 123 AND "partyId" = 1;
+```
+
+**방법 B: 상태만 변경 (기록 보존)**
+```sql
+-- 상태를 rejected로 변경
+UPDATE "Enrollment"
+SET status = 'rejected', "couponUsed" = false
+WHERE "userId" = 123 AND "partyId" = 1;
+```
+
+**권장:** 방법 B (기록 보존)
+
+---
+
+### 시나리오 5: 로그인 ID 분실
+
+**상황:**
+> "제 로그인 ID가 뭐였는지 기억이 안 나요."
+
+**해결 방법:**
+
+```sql
+-- 이름으로 검색
+SELECT "userId", name, phone, birthday FROM "User"
+WHERE name = '홍길동';
+
+-- 전화번호로 검색
+SELECT "userId", name, phone FROM "User"
+WHERE phone = '01012345678';
+
+-- 생년월일로 검색
+SELECT "userId", name, phone, birthday FROM "User"
+WHERE birthday = '990101';
+```
+
+**유저에게 안내:**
+- 개인정보 확인 후 userId 전달
+- 보안을 위해 전화번호 뒷자리 확인 등 본인 인증 필수
+
+---
+
+### 시나리오 6: 승인 대기가 너무 오래 걸림
+
+**상황:**
+> "결제한 지 3일 됐는데 아직도 승인 대기 중이에요."
+
+**해결 방법:**
+
+```sql
+-- 1. Enrollment 상태 확인
+SELECT e.id, e.status, e."createdAt", u.name, u.phone
+FROM "Enrollment" e
+JOIN "User" u ON e."userId" = u.id
+WHERE u."userId" = 'user123' AND e."partyId" = 1;
+
+-- 2. 결제 확인 후 즉시 승인
+UPDATE "Enrollment"
+SET status = 'approved'
+WHERE id = 456;
+```
+
+**Admin Dashboard 사용:**
+- 관리자 계정으로 로그인
+- Admin Dashboard → Pending 목록에서 승인
+
+---
+
+### 시나리오 7: 쿠폰이 보이지 않음 (승인 완료 후)
+
+**상황:**
+> "승인 완료됐다고 했는데 쿠폰이 안 보여요."
+
+**원인 파악:**
+
+```sql
+-- Enrollment 상태 확인
+SELECT e.*, u.name FROM "Enrollment" e
+JOIN "User" u ON e."userId" = u.id
+WHERE u."userId" = 'user123' AND e."partyId" = 1;
+```
+
+**가능한 원인 및 해결:**
+
+**원인 1: status가 approved가 아님**
+```sql
+UPDATE "Enrollment"
+SET status = 'approved'
+WHERE "userId" = 123 AND "partyId" = 1;
+```
+
+**원인 2: 브라우저 캐시 문제**
+- 유저에게 브라우저 새로고침 (Ctrl+F5) 안내
+- 로그아웃 후 재로그인 요청
+
+**원인 3: JWT 토큰 만료**
+- 유저에게 재로그인 안내
+
+---
+
+### 시나리오 8: 중복 참가 신청
+
+**상황:**
+> "실수로 참가 버튼을 여러 번 눌렀어요."
+
+**확인:**
+
+```sql
+-- 중복 enrollment 확인
+SELECT * FROM "Enrollment"
+WHERE "userId" = 123;
+```
+
+**해결:**
+
+현재 시스템은 `@@unique([userId, partyId])` 제약으로 중복 방지되어 있음.
+- 실제로는 중복 생성 불가능
+- 유저에게 시스템적으로 방지되고 있다고 안내
+
+만약 다른 파티에 중복 신청한 경우:
+```sql
+-- 특정 enrollment만 삭제
+DELETE FROM "Enrollment" WHERE id = 999;
+```
+
+---
+
+### 시나리오 9: 계정 삭제 요청 (탈퇴)
+
+**상황:**
+> "더 이상 서비스를 이용하지 않을 거예요. 계정을 삭제해주세요."
+
+**해결 방법:**
+
+```sql
+-- 1. 유저 확인
+SELECT id, "userId", name FROM "User" WHERE "userId" = 'user123';
+
+-- 2. Enrollment 먼저 삭제
+DELETE FROM "Enrollment" WHERE "userId" = 123;
+
+-- 3. User 삭제
+DELETE FROM "User" WHERE id = 123;
+```
+
+**⚠️ 주의:**
+- 삭제 전에 환불/쿠폰 사용 여부 확인
+- 삭제는 복구 불가능 (현재 Soft Delete 미구현)
+- 유저에게 삭제 전 확인 받기
+
+---
+
+### 시나리오 10: 결제했는데 Enrollment가 없음
+
+**상황:**
+> "결제했는데 참가 신청 내역이 안 보여요."
+
+**원인 파악:**
+
+```sql
+-- 1. 유저 확인
+SELECT id FROM "User" WHERE "userId" = 'user123';
+
+-- 2. Enrollment 존재 여부 확인
+SELECT * FROM "Enrollment" WHERE "userId" = 123;
+```
+
+**해결:**
+
+**경우 1: Enrollment가 아예 없음**
+```sql
+-- 수동으로 enrollment 생성 (API 대신)
+INSERT INTO "Enrollment" ("userId", "partyId", status, enrolled, "couponUsed", "createdAt")
+VALUES (123, 1, 'approved', true, false, NOW());
+```
+
+**경우 2: Enrollment는 있지만 pending 상태**
+```sql
+-- 즉시 승인
+UPDATE "Enrollment" SET status = 'approved' WHERE "userId" = 123 AND "partyId" = 1;
+```
+
+---
+
+### 시나리오 11: 초대코드가 작동하지 않음
+
+**상황:**
+> "초대코드를 입력했는데 '유효하지 않은 코드'라고 나와요."
+
+**원인 파악:**
+
+```sql
+-- 초대코드 확인
+SELECT * FROM "Invitation" WHERE code = 'CHRISTMAS2024';
+```
+
+**해결:**
+
+**원인 1: is_active가 false**
+```sql
+UPDATE "Invitation" SET is_active = true WHERE code = 'CHRISTMAS2024';
+```
+
+**원인 2: 대소문자 오류**
+- 유저가 입력한 코드 확인 (대소문자 구분됨)
+
+**원인 3: 초대코드가 존재하지 않음**
+```sql
+-- 새 초대코드 생성
+INSERT INTO "Invitation" (code, is_active) VALUES ('NEWCODE2024', true);
+```
+
+---
+
+### 시나리오 12: 여러 계정을 만들었음 (중복 계정)
+
+**상황:**
+> "실수로 계정을 2개 만들었어요. 하나만 남기고 삭제해주세요."
+
+**확인:**
+
+```sql
+-- 동일인으로 추정되는 계정 검색 (이름/전화번호)
+SELECT id, "userId", name, phone FROM "User"
+WHERE name = '홍길동' OR phone = '01012345678';
+```
+
+**해결:**
+
+```sql
+-- 삭제할 계정의 enrollment 먼저 삭제
+DELETE FROM "Enrollment" WHERE "userId" = 456;
+
+-- 삭제할 계정 삭제
+DELETE FROM "User" WHERE id = 456;
+```
+
+**유지할 계정 확인:**
+- 유저에게 어떤 계정을 유지할지 확인
+- Enrollment가 있는 계정은 신중하게 처리
+
+---
+
+### 시나리오 대응 체크리스트
+
+모든 유저 지원 요청 시:
+
+✅ **1. 유저 신원 확인**
+- 이름, 전화번호, 생년월일 등으로 본인 확인
+
+✅ **2. 데이터베이스 백업 확인**
+- 중요한 변경 전 현재 상태 기록
+
+✅ **3. 변경 사항 기록**
+- 누가, 언제, 무엇을, 왜 변경했는지 기록
+
+✅ **4. 유저에게 결과 안내**
+- 처리 완료 후 변경사항 명확히 전달
+
+✅ **5. 재발 방지**
+- 같은 문제가 자주 발생하면 시스템 개선 검토
+
+---
+
 ## 향후 개선 사항
 
 ### 1. Party 모델 추가
@@ -595,4 +975,4 @@ model User {
 
 ---
 
-**마지막 업데이트**: 2025-12-22
+**마지막 업데이트**: 2025-12-23
