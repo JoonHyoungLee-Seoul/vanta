@@ -15,7 +15,7 @@ ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173,http://127
 BANK_NAME = os.getenv("BANK_NAME", "우리은행")
 BANK_ACCOUNT_NUMBER = os.getenv("BANK_ACCOUNT_NUMBER", "1002-83863-3924")
 BANK_ACCOUNT_HOLDER = os.getenv("BANK_ACCOUNT_HOLDER", "받는분")
-PAYMENT_AMOUNT = int(os.getenv("PAYMENT_AMOUNT", "25000"))
+PAYMENT_AMOUNT = int(os.getenv("PAYMENT_AMOUNT", "20000"))
 
 # JWT 설정 (인증 시스템용)
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "default-jwt-secret-change-in-production")
