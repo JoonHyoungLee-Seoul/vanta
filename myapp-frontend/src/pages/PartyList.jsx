@@ -48,7 +48,7 @@ function PartyList() {
   return (
     <div className="page party-list-page">
       <header className="party-header fade-in">
-        <Logo size="small" />
+        <Logo size="medium" />
       </header>
 
       <section className="party-section">

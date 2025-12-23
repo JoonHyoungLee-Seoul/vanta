@@ -63,7 +63,7 @@ function EventDetail() {
   return (
     <div className="page event-detail-page">
       <header className="event-header fade-in">
-        <Logo size="small" />
+        <Logo size="medium" />
       </header>
 
       <div className="event-content">
