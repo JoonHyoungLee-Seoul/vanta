@@ -14,16 +14,17 @@
 }
 
 .event-title {
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 32px;
+  font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 16px;
+  margin-bottom: 6px;
+  text-align: center;
 }
 
 .halloween-banner {
   width: 100%;
   height: auto;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   border-radius: 12px;
   overflow: hidden;
   background: #000;
