@@ -25,18 +25,18 @@ function EventDetail() {
   const event = eventData[id] || eventData[1];
   const [enrolled, setEnrolled] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [partyInfo, setPartyInfo] = useState({ spotsLeft: 0, totalSpots: 50 });
+  const [partyInfo, setPartyInfo] = useState({ enrolledCount: 0, totalSpots: 50 });
 
   useEffect(() => {
     const fetchData = async () => {
       const userId = registrationData.userId;
 
       try {
-        // Fetch party info (spots remaining)
+        // Fetch party info (enrolled count)
         const partyInfoResponse = await apiClient.getPartyInfo(id);
         if (partyInfoResponse.ok) {
           setPartyInfo({
-            spotsLeft: partyInfoResponse.spotsLeft,
+            enrolledCount: partyInfoResponse.enrolledCount,
             totalSpots: partyInfoResponse.totalSpots,
           });
         }
@@ -105,7 +105,7 @@ function EventDetail() {
 
             <div className="meta-row">
               <span className="spots-icon">👥</span>
-              <span className="spots-text">{partyInfo.spotsLeft}/{partyInfo.totalSpots} spots left</span>
+              <span className="spots-text">{partyInfo.enrolledCount}/{partyInfo.totalSpots} enrolled</span>
             </div>
           </div>
         </div>
