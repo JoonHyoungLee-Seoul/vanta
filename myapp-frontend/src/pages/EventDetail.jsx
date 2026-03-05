@@ -6,23 +6,11 @@ import Logo from '../components/Logo';
 import BottomNav from '../components/BottomNav';
 import './EventDetail.css';
 
-const eventData = {
-  1: {
-    id: 1,
-    title: "After-Christmas Party",
-    date: 'Sat, DEC 27',
-    time: '8:00pm - 2:00am',
-    host: 'Woojin Park, Joonhyoung Lee',
-    location: '서울 강남구 압구정로48길 35 1층 (사파리 압구정)',
-    description: '',
-  },
-};
-
 function EventDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { registrationData } = useEnrollment();
-  const event = eventData[id] || eventData[1];
+  const [event, setEvent] = useState(null);
   const [enrolled, setEnrolled] = useState(false);
   const [loading, setLoading] = useState(true);
   const [partyInfo, setPartyInfo] = useState({ enrolledCount: 0, totalSpots: 50 });
@@ -32,6 +20,12 @@ function EventDetail() {
       const userId = registrationData.userId;
 
       try {
+        // Fetch party details
+        const partyDetailResponse = await apiClient.getPartyDetail(id);
+        if (partyDetailResponse.ok) {
+          setEvent(partyDetailResponse.party);
+        }
+
         // Fetch party info (enrolled count)
         const partyInfoResponse = await apiClient.getPartyInfo(id);
         if (partyInfoResponse.ok) {
@@ -60,6 +54,20 @@ function EventDetail() {
     navigate(`/payment/${id}`);
   };
 
+  if (loading || !event) {
+    return (
+      <div className="page event-detail-page">
+        <header className="event-header fade-in">
+          <Logo size="medium" />
+        </header>
+        <div className="event-content">
+          <p>Loading...</p>
+        </div>
+        <BottomNav />
+      </div>
+    );
+  }
+
   return (
     <div className="page event-detail-page">
       <header className="event-header fade-in">
@@ -67,7 +75,7 @@ function EventDetail() {
       </header>
 
       <div className="event-content">
-        <h2 className="event-title fade-in delay-1">{event.title}</h2>
+        <h2 className="event-title fade-in delay-1">{event.name}</h2>
         
         <div className="halloween-banner fade-in delay-2">
           <img
@@ -114,11 +122,17 @@ function EventDetail() {
           <p>{event.description}</p>
         </div>
 
-        {!enrolled && (
+        {!enrolled && !event.isArchived && event.isActive && (
           <div className="event-footer fade-in delay-5">
             <button className="enroll-button" onClick={handleEnroll}>
               Enroll
             </button>
+          </div>
+        )}
+
+        {event.isArchived && (
+          <div className="event-footer fade-in delay-5">
+            <div className="archived-notice">This party has been archived</div>
           </div>
         )}
       </div>

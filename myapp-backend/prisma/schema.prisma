@@ -34,6 +34,21 @@ model User {
   enrollments   Enrollment[]
 }
 
+model Party {
+  id          Int      @id @default(autoincrement())
+  name        String
+  date        String
+  time        String
+  host        String
+  location    String
+  description String?
+  image       String?
+  capacity    Int      @default(50)
+  isActive    Boolean  @default(true)
+  isArchived  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
 model Enrollment {
   id         Int      @id @default(autoincrement())
   userId     Int

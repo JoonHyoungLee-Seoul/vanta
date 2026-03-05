@@ -41,6 +41,23 @@ class User(Base):
     enrollments = relationship("Enrollment", back_populates="user")
 
 
+class Party(Base):
+    __tablename__ = "Party"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, nullable=False)
+    date = Column(String, nullable=False)
+    time = Column(String, nullable=False)
+    host = Column(String, nullable=False)
+    location = Column(String, nullable=False)
+    description = Column(String, nullable=True)
+    image = Column(String, nullable=True)
+    capacity = Column(Integer, default=50, nullable=False)
+    isActive = Column(Boolean, default=True, nullable=False)
+    isArchived = Column(Boolean, default=False, nullable=False)
+    createdAt = Column(DateTime, default=func.now(), nullable=False)
+
+
 class Enrollment(Base):
     __tablename__ = "Enrollment"
 

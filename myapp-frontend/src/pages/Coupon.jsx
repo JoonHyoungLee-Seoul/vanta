@@ -7,15 +7,13 @@ import Logo from '../components/Logo';
 import './Coupon.css';
 
 function Coupon() {
-  const [couponUsed, setCouponUsed] = useState(false);
+  const [coupons, setCoupons] = useState([]);
   const [showUsedModal, setShowUsedModal] = useState(false);
+  const [usedCouponParty, setUsedCouponParty] = useState(null);
+  const [usedCouponImage, setUsedCouponImage] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [hasNoCoupon, setHasNoCoupon] = useState(false);
   const navigate = useNavigate();
   const { registrationData } = useEnrollment();
-
-  // For now, hardcoding partyId as 1 (After-Christmas Party)
-  const partyId = 1;
 
   useEffect(() => {
     if (!registrationData.userId) {
@@ -23,33 +21,64 @@ function Coupon() {
       return;
     }
 
-    loadCouponStatus();
-  }, []);
+    loadAllCoupons();
+  }, [registrationData.userId]);
 
-  const loadCouponStatus = async () => {
+  const loadAllCoupons = async () => {
     try {
-      const result = await apiClient.getCoupon(registrationData.userId, partyId);
-      if (result.ok) {
-        setCouponUsed(result.couponUsed);
-        setHasNoCoupon(false);
-      } else {
-        // 참가하지 않은 파티 - 쿠폰 없음 상태로 설정
-        setHasNoCoupon(true);
+      // Get user profile with all enrollments
+      const profileResult = await apiClient.getUserProfile(registrationData.userId);
+
+      if (!profileResult.ok || !profileResult.enrollments || profileResult.enrollments.length === 0) {
+        setLoading(false);
+        return;
       }
+
+      // Get party details for all enrolled parties
+      const couponPromises = profileResult.enrollments
+        .filter(enrollment => enrollment.status === 'approved') // Only approved enrollments
+        .map(async (enrollment) => {
+          try {
+            const partyResult = await apiClient.getPartyDetail(enrollment.partyId);
+            if (partyResult.ok) {
+              return {
+                partyId: enrollment.partyId,
+                partyName: partyResult.party.name,
+                partyImage: partyResult.party.image,
+                couponUsed: enrollment.couponUsed,
+                isArchived: partyResult.party.isArchived,
+                isActive: partyResult.party.isActive,
+                enrolledAt: enrollment.enrolledAt,
+              };
+            }
+            return null;
+          } catch (error) {
+            console.error(`Failed to load party ${enrollment.partyId}:`, error);
+            return null;
+          }
+        });
+
+      const loadedCoupons = (await Promise.all(couponPromises)).filter(c => c !== null);
+      setCoupons(loadedCoupons);
     } catch (err) {
-      console.error('Failed to load coupon:', err);
-      // 에러 발생 시에도 쿠폰 없음으로 처리
-      setHasNoCoupon(true);
+      console.error('Failed to load coupons:', err);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleUseCoupon = async () => {
+  const handleUseCoupon = async (partyId, partyName, partyImage) => {
     try {
       const result = await apiClient.useCoupon(registrationData.userId, partyId);
       if (result.ok) {
-        setCouponUsed(true);
+        // Update the coupon status locally
+        setCoupons(coupons.map(coupon =>
+          coupon.partyId === partyId
+            ? { ...coupon, couponUsed: true }
+            : coupon
+        ));
+        setUsedCouponParty(partyName);
+        setUsedCouponImage(partyImage);
         setShowUsedModal(true);
       }
     } catch (err) {
@@ -60,10 +89,27 @@ function Coupon() {
 
   const closeModal = () => {
     setShowUsedModal(false);
+    setUsedCouponParty(null);
+    setUsedCouponImage(null);
+  };
+
+  const canUseCoupon = (coupon) => {
+    // Can use if: not used AND party is active (not archived)
+    return !coupon.couponUsed && !coupon.isArchived && coupon.isActive;
   };
 
   if (loading) {
-    return <div className="page coupon-page">Loading...</div>;
+    return (
+      <div className="page coupon-page">
+        <div className="coupon-header">
+          <Logo size="medium" />
+        </div>
+        <div className="coupon-content">
+          <p>Loading...</p>
+        </div>
+        <BottomNav />
+      </div>
+    );
   }
 
   return (
@@ -73,36 +119,52 @@ function Coupon() {
       </div>
 
       <div className="coupon-content">
-        <h2 className="coupon-title">Coupon</h2>
+        <h2 className="coupon-title">My Coupons</h2>
 
-        {hasNoCoupon ? (
+        {coupons.length === 0 ? (
           <div className="empty-coupon-message">
             <p>사용가능한 쿠폰이 없습니다.</p>
           </div>
         ) : (
-          <div className="coupon-card">
-            <div className="coupon-card-content">
-              <div className="coupon-image-container">
-                <img
-                  src="/party-image.png"
-                  alt="Party"
-                  className="coupon-image"
-                />
+          <div className="coupon-list">
+            {coupons.map((coupon) => (
+              <div
+                key={coupon.partyId}
+                className={`coupon-card ${!canUseCoupon(coupon) ? 'disabled' : ''}`}
+              >
+                <div className="coupon-card-content">
+                  <div className="coupon-image-container">
+                    <img
+                      src={coupon.partyImage || '/party-image.png'}
+                      alt={coupon.partyName}
+                      className="coupon-image"
+                    />
+                  </div>
+                  <div className="coupon-info">
+                    <p className="coupon-offer">1 Free drink</p>
+                    <p className="coupon-party">{coupon.partyName}</p>
+                    {coupon.isArchived && (
+                      <p className="coupon-status archived">Party Closed</p>
+                    )}
+                  </div>
+                </div>
+                <div className="coupon-action">
+                  {coupon.couponUsed ? (
+                    <span className="coupon-used-label">Used</span>
+                  ) : coupon.isArchived ? (
+                    <span className="coupon-expired-label">Expired</span>
+                  ) : (
+                    <button
+                      className="coupon-use-btn"
+                      onClick={() => handleUseCoupon(coupon.partyId, coupon.partyName, coupon.partyImage)}
+                      disabled={!canUseCoupon(coupon)}
+                    >
+                      Use
+                    </button>
+                  )}
+                </div>
               </div>
-              <div className="coupon-info">
-                <p className="coupon-offer">1 Free drink</p>
-                <p className="coupon-party">After-Christmas Party</p>
-              </div>
-            </div>
-            <div className="coupon-action">
-              {couponUsed ? (
-                <span className="coupon-used-label">Used</span>
-              ) : (
-                <button className="coupon-use-btn" onClick={handleUseCoupon}>
-                  Use
-                </button>
-              )}
-            </div>
+            ))}
           </div>
         )}
       </div>
@@ -113,13 +175,16 @@ function Coupon() {
           <div className="coupon-modal-content">
             <div className="coupon-modal-image-container">
               <img
-                src="/images/party-main.png"
+                src={usedCouponImage || '/images/party-main.png'}
                 alt="Party"
                 className="coupon-modal-image"
               />
             </div>
             <h2 className="coupon-modal-title">Used!</h2>
             <p className="coupon-modal-subtitle">Show this to the merchant</p>
+            {usedCouponParty && (
+              <p className="coupon-modal-party">{usedCouponParty}</p>
+            )}
           </div>
         </div>
       )}

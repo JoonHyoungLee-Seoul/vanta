@@ -23,7 +23,7 @@ GET https://vanta-production-9f79.up.railway.app/health
   "service": "vanta-backend"
 }
 ```
-
+postgresql://neondb_owner:npg_SN9xMJqCZTh0@ep-hidden-surf-a16j0ja9-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
 ---
 
 ## 프론트엔드 환경 변수 설정

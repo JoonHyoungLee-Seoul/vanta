@@ -20,6 +20,16 @@
   margin-bottom: 16px;
 }
 
+.party-section.closed-section {
+  margin-top: 40px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border-color);
+}
+
+.party-section.closed-section .section-title {
+  color: var(--text-secondary);
+}
+
 .party-cards {
   display: flex;
   flex-direction: column;
@@ -41,12 +51,21 @@
   transform: translateY(-2px);
 }
 
+.party-card.archived {
+  opacity: 0.7;
+}
+
+.party-card.archived:hover {
+  transform: none;
+}
+
 .party-image {
   width: 100px;
   height: 120px;
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
+  position: relative;
 }
 
 .party-image img {
@@ -108,4 +127,22 @@
 .host-name {
   font-size: 13px;
   color: var(--text-secondary);
+}
+
+.archived-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.enroll-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  text-decoration: none;
 }

@@ -28,6 +28,12 @@
   margin: 0 0 20px 0;
 }
 
+.coupon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .coupon-card {
   background: #2a2a2a;
   border-radius: 8px;
@@ -35,6 +41,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.coupon-card.disabled {
+  opacity: 0.5;
 }
 
 .coupon-card-content {
@@ -76,6 +86,19 @@
   margin: 0;
 }
 
+.coupon-status {
+  font-size: 11px;
+  margin: 4px 0 0 0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.coupon-status.archived {
+  background: #444;
+  color: #999;
+}
+
 .coupon-action {
   flex-shrink: 0;
 }
@@ -91,11 +114,23 @@
   transition: opacity 0.2s;
 }
 
-.coupon-use-btn:hover {
+.coupon-use-btn:hover:not(:disabled) {
   opacity: 0.8;
 }
 
+.coupon-use-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .coupon-used-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #666;
+  padding: 8px 16px;
+}
+
+.coupon-expired-label {
   font-size: 15px;
   font-weight: 600;
   color: #666;
@@ -146,6 +181,12 @@
   font-size: 16px;
   color: #ccc;
   margin: 0;
+}
+
+.coupon-modal-party {
+  font-size: 14px;
+  color: #999;
+  margin: 12px 0 0 0;
 }
 
 /* Bottom navigation is now handled by BottomNav component */

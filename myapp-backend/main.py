@@ -10,7 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import SQLAlchemyError
 import config
 from database import get_db
-from models import Invitation, RegisterSession, User, Enrollment
+from models import Invitation, RegisterSession, User, Enrollment, Party
 from auth import get_current_user, get_current_admin_user
 
 # 로깅 설정
@@ -82,6 +82,70 @@ async def value_error_handler(request: Request, exc: ValueError):
 async def health_check():
     """서버 상태 확인"""
     return {"status": "ok", "service": "vanta-backend"}
+
+# ====================================================================================
+# 파티 조회 API
+# ====================================================================================
+
+
+@app.get("/parties")
+async def get_parties(include_archived: bool = False, db: AsyncSession = Depends(get_db)):
+    """파티 목록 조회"""
+    if include_archived:
+        result = await db.execute(select(Party).order_by(Party.createdAt.desc()))
+    else:
+        result = await db.execute(
+            select(Party).where(Party.isArchived == False).order_by(Party.createdAt.desc())
+        )
+
+    parties = result.scalars().all()
+
+    return {
+        "ok": True,
+        "parties": [
+            {
+                "id": party.id,
+                "name": party.name,
+                "date": party.date,
+                "time": party.time,
+                "host": party.host,
+                "location": party.location,
+                "description": party.description,
+                "image": party.image,
+                "capacity": party.capacity,
+                "isActive": party.isActive,
+                "isArchived": party.isArchived,
+            }
+            for party in parties
+        ]
+    }
+
+
+@app.get("/party/{party_id}")
+async def get_party_detail(party_id: int, db: AsyncSession = Depends(get_db)):
+    """특정 파티 상세 조회"""
+    result = await db.execute(select(Party).where(Party.id == party_id))
+    party = result.scalar_one_or_none()
+
+    if not party:
+        return {"ok": False, "message": "파티를 찾을 수 없습니다."}
+
+    return {
+        "ok": True,
+        "party": {
+            "id": party.id,
+            "name": party.name,
+            "date": party.date,
+            "time": party.time,
+            "host": party.host,
+            "location": party.location,
+            "description": party.description,
+            "image": party.image,
+            "capacity": party.capacity,
+            "isActive": party.isActive,
+            "isArchived": party.isArchived,
+        }
+    }
 
 # ====================================================================================
 # 초대코드 검증 API
@@ -428,22 +492,24 @@ async def check_enrollment(user_id: int, party_id: int, db: AsyncSession = Depen
 @app.get("/party/{party_id}/info")
 async def get_party_info(party_id: int, db: AsyncSession = Depends(get_db)):
     """파티 정보와 남은 자리 수를 조회"""
+    # 파티 정보 조회
+    party_result = await db.execute(select(Party).where(Party.id == party_id))
+    party = party_result.scalar_one_or_none()
+
+    if not party:
+        return {"ok": False, "message": "파티를 찾을 수 없습니다."}
+
     # 승인된 enrollment 수 카운트
-    result = await db.execute(
+    enrollment_result = await db.execute(
         select(Enrollment).where(
             Enrollment.partyId == party_id,
             Enrollment.status == "approved"
         )
     )
-    approved_enrollments = result.scalars().all()
+    approved_enrollments = enrollment_result.scalars().all()
     enrolled_count = len(approved_enrollments)
 
-    # 파티별 총 정원 (하드코딩 - 추후 Party 모델 추가 시 DB에서 가져오기)
-    party_capacities = {
-        1: 50,  # After-Christmas Party
-    }
-
-    total_spots = party_capacities.get(party_id, 50)
+    total_spots = party.capacity
     spots_left = max(0, total_spots - enrolled_count)
 
     return {

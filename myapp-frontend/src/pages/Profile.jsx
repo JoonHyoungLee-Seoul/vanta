@@ -6,15 +6,11 @@ import BottomNav from '../components/BottomNav';
 import Logo from '../components/Logo';
 import './Profile.css';
 
-// 파티 데이터 매핑 (실제로는 백엔드에서 가져와야 하지만, 현재는 하드코딩)
-const partyNames = {
-  1: "After-Christmas Party"
-};
-
 function Profile() {
   const navigate = useNavigate();
   const { registrationData } = useEnrollment();
   const [profileData, setProfileData] = useState(null);
+  const [partyNames, setPartyNames] = useState({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -28,6 +24,17 @@ function Profile() {
 
   const loadProfileData = async () => {
     try {
+      // Fetch party names
+      const partiesResponse = await apiClient.getParties(true);
+      if (partiesResponse.ok) {
+        const names = {};
+        partiesResponse.parties.forEach(party => {
+          names[party.id] = party.name;
+        });
+        setPartyNames(names);
+      }
+
+      // Fetch profile data
       const result = await apiClient.getUserProfile(registrationData.userId);
       if (result.ok) {
         setProfileData(result);

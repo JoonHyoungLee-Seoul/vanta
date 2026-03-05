@@ -9,16 +9,27 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://vanta-production-9
 function Admin() {
   const navigate = useNavigate();
   const [pendingEnrollments, setPendingEnrollments] = useState([]);
+  const [filteredEnrollments, setFilteredEnrollments] = useState([]);
+  const [parties, setParties] = useState([]);
+  const [selectedPartyId, setSelectedPartyId] = useState('all');
   const [loading, setLoading] = useState(true);
   const [processingId, setProcessingId] = useState(null);
 
-  const partyNames = {
-    1: "After-Christmas Party"
-  };
-
   useEffect(() => {
+    loadParties();
     loadPendingEnrollments();
   }, []);
+
+  const loadParties = async () => {
+    try {
+      const partiesResponse = await apiClient.getParties(true);
+      if (partiesResponse.ok) {
+        setParties(partiesResponse.parties);
+      }
+    } catch (error) {
+      console.error('Failed to load parties:', error);
+    }
+  };
 
   const loadPendingEnrollments = async () => {
     try {
@@ -34,6 +45,7 @@ function Admin() {
       const data = await response.json();
       if (data.ok) {
         setPendingEnrollments(data.enrollments);
+        setFilteredEnrollments(data.enrollments);
       }
     } catch (error) {
       console.error('Failed to load pending enrollments:', error);
@@ -41,6 +53,22 @@ function Admin() {
     } finally {
       setLoading(false);
     }
+  };
+
+  useEffect(() => {
+    // Filter enrollments when party selection changes
+    if (selectedPartyId === 'all') {
+      setFilteredEnrollments(pendingEnrollments);
+    } else {
+      const partyId = parseInt(selectedPartyId);
+      setFilteredEnrollments(
+        pendingEnrollments.filter(e => e.partyId === partyId)
+      );
+    }
+  }, [selectedPartyId, pendingEnrollments]);
+
+  const handlePartyFilterChange = (e) => {
+    setSelectedPartyId(e.target.value);
   };
 
   const handleApprove = async (enrollmentId) => {
@@ -58,8 +86,9 @@ function Admin() {
       const data = await response.json();
       if (data.ok) {
         alert('승인되었습니다!');
-        // Remove from list
+        // Remove from both lists
         setPendingEnrollments(prev => prev.filter(e => e.id !== enrollmentId));
+        setFilteredEnrollments(prev => prev.filter(e => e.id !== enrollmentId));
       } else {
         throw new Error(data.message || '승인 실패');
       }
@@ -86,8 +115,9 @@ function Admin() {
       const data = await response.json();
       if (data.ok) {
         alert('거절되었습니다.');
-        // Remove from list
+        // Remove from both lists
         setPendingEnrollments(prev => prev.filter(e => e.id !== enrollmentId));
+        setFilteredEnrollments(prev => prev.filter(e => e.id !== enrollmentId));
       } else {
         throw new Error(data.message || '거절 실패');
       }
@@ -136,21 +166,46 @@ function Admin() {
       </div>
 
       <div className="admin-content">
-        <div className="pending-count">
-          승인 대기중: <span className="count">{pendingEnrollments.length}</span>건
+        <div className="admin-filters">
+          <div className="filter-group">
+            <label htmlFor="party-filter">Filter by Party:</label>
+            <select
+              id="party-filter"
+              value={selectedPartyId}
+              onChange={handlePartyFilterChange}
+              className="party-filter-select"
+            >
+              <option value="all">All Parties</option>
+              {parties.map(party => (
+                <option key={party.id} value={party.id}>
+                  {party.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="pending-count">
+            승인 대기중: <span className="count">{filteredEnrollments.length}</span>건
+            {selectedPartyId !== 'all' && (
+              <span className="total-count"> (전체: {pendingEnrollments.length}건)</span>
+            )}
+          </div>
         </div>
 
-        {pendingEnrollments.length === 0 ? (
+        {filteredEnrollments.length === 0 ? (
           <div className="empty-state">
-            <p>승인 대기 중인 참가 신청이 없습니다.</p>
+            <p>
+              {selectedPartyId === 'all'
+                ? '승인 대기 중인 참가 신청이 없습니다.'
+                : '선택한 파티에 승인 대기 중인 참가 신청이 없습니다.'}
+            </p>
           </div>
         ) : (
           <div className="enrollment-list">
-            {pendingEnrollments.map((enrollment) => (
+            {filteredEnrollments.map((enrollment) => (
               <div key={enrollment.id} className="enrollment-card">
                 <div className="enrollment-info">
                   <div className="party-name">
-                    {partyNames[enrollment.partyId] || `Party #${enrollment.partyId}`}
+                    {parties.find(p => p.id === enrollment.partyId)?.name || `Party #${enrollment.partyId}`}
                   </div>
                   <div className="user-info">
                     <div className="info-row">
